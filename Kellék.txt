@@ -1,0 +1,4 @@
+SELECT laning.role, mage.hos_nev, heros.kep FROM `laning` INNER JOIN mage ON mage.role = laning.id INNER JOIN heros ON mage.hos_id = heros.hos_id 
+
+
+SELECT `item_nev`,`ar`,`leiras`,`kep`, items.item_fajta FROM `attack` INNER JOIN items ON items.tipus_id = attack.tipus_id 
