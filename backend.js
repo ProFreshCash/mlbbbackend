@@ -11,6 +11,31 @@ app.get('/', (req, res) => {
 })
 
 
+app.get('/osszeshos', (req, res) => {
+
+  var mysql = require('mysql')
+  var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'mlbb'
+  })
+  
+  connection.connect()
+  
+  connection.query('SELECT `hos_nev`,`kep`,laning.role FROM `heros` INNER JOIN laning ON laning.id=heros.role_id ', function (err, rows, fields) {
+    if (err) throw err
+  
+    console.log(rows)
+    res.send(rows)
+  })
+  
+  connection.end()
+
+
+
+})
+
 app.get('/tankok', (req, res) => {
 
     var mysql = require('mysql')
@@ -23,7 +48,32 @@ app.get('/tankok', (req, res) => {
     
     connection.connect()
     
-    connection.query('SELECT tank.hos_nev, tank.leiras, `kep` FROM `heros` INNER JOIN tank ON tank.hos_id = heros.hos_id ', function (err, rows, fields) {
+    connection.query('SELECT `hos_nev`,`kep`,laning.role FROM `heros` INNER JOIN laning ON laning.id=heros.role_id WHERE laning.role LIKE "Tank" ', function (err, rows, fields) {
+      if (err) throw err
+    
+      console.log(rows)
+      res.send(rows)
+    })
+    
+    connection.end()
+
+
+  
+  })
+
+  app.get('/harcosok', (req, res) => {
+
+    var mysql = require('mysql')
+    var connection = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'mlbb'
+    })
+    
+    connection.connect()
+    
+    connection.query('SELECT `hos_nev`,`kep`,laning.role FROM `heros` INNER JOIN laning ON laning.id=heros.role_id WHERE laning.role LIKE "Fighter"', function (err, rows, fields) {
       if (err) throw err
     
       console.log(rows)
